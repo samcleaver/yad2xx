@@ -8,10 +8,44 @@
 	<artifactId>yad2xx</artifactId>
 	<version>0.1-SNAPSHOT</version>
 
-	<name>Yet Another JNI-D2XX Interface Library.</name>
-
 	<packaging>pom</packaging>
 
+	<name>Yet Another JNI-D2XX Interface Library.</name>
+	
+	<description>
+	    A Java Native Interface (JNI) library for the FTDI D2XX USB driver. 
+	</description>
+
+	<inceptionYear>2012</inceptionYear>
+    <url>https://sourceforge.net/projects/yad2xx/</url>
+
+	<licenses>
+    	<license>
+      		<name>GNU Lesser General Public License v3.0</name>
+      		<url>http://www.gnu.org/licenses/lgpl.html</url>
+      		<distribution>repo</distribution>
+    	</license>
+	</licenses>
+
+	<scm>
+    	<url>https://svn.code.sf.net/p/yad2xx/code/</url>
+    	<connection>https://svn.code.sf.net/p/yad2xx/code/</connection>
+	</scm>
+
+    <issueManagement>
+    	<system>SourceForge</system>
+    	<url>https://sourceforge.net/p/yad2xx/tickets/</url>
+  	</issueManagement>
+    
+    <developers>
+    	<developer>
+    		<id>sjdavies</id>
+    		<name>Stephen Davies</name>
+    		<email>sjdavies@users.sourceforge.net</email>
+    	</developer>
+    </developers>
+    
+    <!-- Multi-module project, native libraries are included based on profile below. -->
 	<modules>
 		<module>yad2xxJava</module>
 	</modules>
@@ -19,10 +53,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
-	<dependencies>
-
-	</dependencies>
 
 	<build>
 		<defaultGoal>install</defaultGoal>
