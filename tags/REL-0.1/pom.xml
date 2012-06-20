@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.sf.yad2xx</groupId>
+	<artifactId>yad2xx</artifactId>
+	<version>0.1-SNAPSHOT</version>
+
+	<name>Yet Another JNI-D2XX Interface Library.</name>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>yad2xxJava</module>
+	</modules>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<pluginManagement>
+
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.4</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.9</version>
+					<configuration>
+						<downloadJavadocs>true</downloadJavadocs>
+						<downloadSources>true</downloadSources>
+						<additionalProjectnatures>
+							<projectnature>org.eclipse.m2e.core.maven2Nature</projectnature>
+						</additionalProjectnatures>
+						<additionalBuildcommands>
+							<buildcommand>org.eclipse.m2e.core.maven2Builder</buildcommand>
+						</additionalBuildcommands>
+					</configuration>
+				</plugin>
+				
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>Mac</id>
+			<activation>
+				<os>
+        			<family>Mac</family>
+      			</os>
+    		</activation>
+    		
+    		<modules>
+				<module>yad2xxJnilib</module>
+			</modules>
+    		
+		</profile>
+		
+		<profile>
+			<id>Windows</id>
+			<activation>
+				<os>
+        			<family>Windows</family>
+      			</os>
+    		</activation>
+    		
+			<modules>
+				<module>yad2xxDll</module>
+			</modules>
+	
+		</profile>
+	</profiles>
+
+</project>
