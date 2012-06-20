@@ -244,7 +244,7 @@ JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_getQueueStatus
  * Method:    open
  * Signature: (Lnet/sf/yad2xx/Device;)V
  */
-JNIEXPORT void JNICALL Java_au_com_daviesconsulting_ftdi_jni_FTDIInterface_open
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_open
   (JNIEnv * env, jobject iFace, jobject device) {
 	FT_HANDLE ftHandle;
 	FT_STATUS ftStatus;
