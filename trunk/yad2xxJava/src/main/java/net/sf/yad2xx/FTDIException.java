@@ -28,6 +28,8 @@ package net.sf.yad2xx;
  */
 public class FTDIException extends Exception {
 
+	private static final long serialVersionUID = -5734156165680539506L;
+
 	private int status;
 	private String function;
 	
