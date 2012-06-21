@@ -11,45 +11,46 @@
 	<packaging>pom</packaging>
 
 	<name>Yet Another JNI-D2XX Interface Library.</name>
-	
+
 	<description>
-	    A Java Native Interface (JNI) library for the FTDI D2XX USB driver. 
+	   A Java Native Interface (JNI) library for the FTDI D2XX USB driver. 
 	</description>
 
 	<inceptionYear>2012</inceptionYear>
-    <url>https://sourceforge.net/projects/yad2xx/</url>
+	<url>https://sourceforge.net/projects/yad2xx/</url>
 
 	<licenses>
-    	<license>
-      		<name>GNU Lesser General Public License v3.0</name>
-      		<url>http://www.gnu.org/licenses/lgpl.html</url>
-      		<distribution>repo</distribution>
-    	</license>
+		<license>
+			<name>GNU Lesser General Public License v3.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+			<distribution>repo</distribution>
+		</license>
 	</licenses>
 
 	<scm>
-    	<url>https://svn.code.sf.net/p/yad2xx/code/</url>
-    	<connection>https://svn.code.sf.net/p/yad2xx/code/</connection>
+		<url>https://svn.code.sf.net/p/yad2xx/code/</url>
+		<connection>https://svn.code.sf.net/p/yad2xx/code/</connection>
 	</scm>
 
-    <issueManagement>
-    	<system>SourceForge</system>
-    	<url>https://sourceforge.net/p/yad2xx/tickets/</url>
-  	</issueManagement>
-    
-    <developers>
-    	<developer>
-    		<id>sjdavies</id>
-    		<name>Stephen Davies</name>
-    		<email>sjdavies@users.sourceforge.net</email>
-    	</developer>
-    </developers>
-    
-    <!-- Multi-module project, native libraries are included based on profile below. -->
+	<issueManagement>
+		<system>SourceForge</system>
+		<url>https://sourceforge.net/p/yad2xx/tickets/</url>
+	</issueManagement>
+
+	<developers>
+		<developer>
+			<id>sjdavies</id>
+			<name>Stephen Davies</name>
+			<email>sjdavies@users.sourceforge.net</email>
+		</developer>
+	</developers>
+
+	<!-- Multi-module project, native libraries are included based on profile 
+		below. -->
 	<modules>
 		<module>yad2xxJava</module>
 	</modules>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -82,7 +83,7 @@
 						</additionalBuildcommands>
 					</configuration>
 				</plugin>
-				
+
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -92,28 +93,28 @@
 			<id>Mac</id>
 			<activation>
 				<os>
-        			<family>Mac</family>
-      			</os>
-    		</activation>
-    		
-    		<modules>
+					<family>Mac</family>
+				</os>
+			</activation>
+
+			<modules>
 				<module>yad2xxJnilib</module>
 			</modules>
-    		
+
 		</profile>
-		
+
 		<profile>
 			<id>Windows</id>
 			<activation>
 				<os>
-        			<family>Windows</family>
-      			</os>
-    		</activation>
-    		
+					<family>Windows</family>
+				</os>
+			</activation>
+
 			<modules>
 				<module>yad2xxDll</module>
 			</modules>
-	
+
 		</profile>
 	</profiles>
 

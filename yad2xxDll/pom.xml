@@ -10,7 +10,7 @@
 		<version>0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>yad2xxDll</artifactId>
+	<artifactId>FTDIInterface</artifactId>
 
 	<name>yad2xx - Windows Library</name>
 
@@ -28,8 +28,6 @@
 
 	<build>
 	
-		<finalName>FTDIInterface</finalName>
-		
 		<plugins>
 
 			<plugin>

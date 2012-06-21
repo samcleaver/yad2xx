@@ -10,7 +10,7 @@
 		<version>0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>yad2xxJnilib</artifactId>
+	<artifactId>libFTDIInterface</artifactId>
 
 	<name>yad2xx - OS X Library</name>
 
