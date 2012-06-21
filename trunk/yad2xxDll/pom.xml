@@ -12,7 +12,7 @@
 
 	<artifactId>FTDIInterface</artifactId>
 
-	<name>yad2xx - Windows Library</name>
+	<name>yad2xx - Windows DLL</name>
 
 	<packaging>dll</packaging>
 
