@@ -21,38 +21,50 @@ package net.sf.yad2xx;
 /**
  * JNI module to adapt FTDI D2XX library to a more OO based approach.
  * 
+ * Some functions are intended to be callable directly, some are 
+ * intended to be called indirectly i.e. via a Device. In general,
+ * directly callable functions are public. Methods intended to be called
+ * indirectly have default (package-private) visibility. 
+ * 
  * @since May 20, 2012
  * @author Stephen Davies
  */
 public class FTDIInterface {
 
+	/**
+	 * Loads the native library on first class usage.. The location of the
+	 * library is JVM/platform dependent.
+	 */
 	static {
 		System.loadLibrary("FTDIInterface");
 	}
 
 	/**
-	 * Close the opened device. Calls FT_Close. ftHandle and flags will be 
-	 * reset at completion.
-	 *
-	 * @param device to close
-	 * @throws FTDIException
-	 */
-	public native void close(Device device) throws FTDIException;
-	
-	/**
 	 * This function (FT_CreateDeviceInfoList) builds a device information list
 	 * and returns the number of D2XX devices connected to the system. The list
 	 * contains information about both unopen and open devices.
 	 *
-	 * @return number of devices connected to the system.
+	 * Not sure how useful this really is in Java. Probably better off using
+	 * getDevices() and using the returned array length.
+	 * 
+	 * @return number of devices connected to the system
 	 * @throws FTDIException
 	 */
 	public native int getDeviceCount() throws FTDIException;
 
 	/**
+	 * Returns an array of Devices which describe attached D2XX devices. Combines
+	 * calls to FT_CreateDeviceInfoList and FT_GetDeviceInfoList.
+	 *
+	 * Copies values returned from FT_GetDeviceInfoList into individual Device objects.
+	 */
+	public native Device[] getDevices() throws FTDIException;
+
+	/**
 	 * Returns the D2XX library version as M.m.p. A prettier way of calling
 	 * FT_GetLibraryVersion.
 	 *
+	 * @return library version string
 	 * @throws FTDIException 
 	 */
 	public String getLibraryVersion() throws FTDIException {
@@ -65,34 +77,50 @@ public class FTDIInterface {
 	}
 
 	/**
-	 * FT_GetLibraryVersion.
+	 * FT_GetLibraryVersion in its raw format.
 	 * 
 	 * @return the D2XX DLL version number.
 	 */
-	private native int getLibraryVersionInt() throws FTDIException;
+	public native int getLibraryVersionInt() throws FTDIException;
 
 	/**
-	 * Combines FT_CreateDeviceInfoList and FT_GetDeviceInfoList.
-	 *
-	 * Copies values returned from FT_GetDeviceInfoList into individual Device objects.
+	 * A command to include a custom VID and PID combination within the internal device list table.
+	 * This will allow the driver to load for the specified VID and PID combination.
+	 * Note, on Windows this performs a no-op.
+	 * 
+	 * @param vid
+	 * @param pid
+	 * @throws FTDIException
 	 */
-	public native Device[] getDevices() throws FTDIException;
-	
+	public native void setVidPid(int vid, int pid) throws FTDIException;
+
+	/**
+	 * Close the opened device. Calls FT_Close. ftHandle and flags will be 
+	 * reset at completion.
+	 *
+	 * @param device to close
+	 * @throws FTDIException
+	 * @see Device#close()
+	 */
+	native void close(Device device) throws FTDIException;
+
 	/**
 	 * Returns numbers of bytes in the receive queue. Calls FT_GetQueueStatus.
 	 * 
 	 * @param ftHandle
 	 * @throws FTDIException
+	 * @see Device#getQueueStatus()
 	 */
-	public native int getQueueStatus(long ftHandle) throws FTDIException;
+	native int getQueueStatus(long ftHandle) throws FTDIException;
 	
 	/**
 	 * Opens the device. Returned handle is recorded in the device. Calls FT_Open.
 	 * 
 	 * @param dev 
 	 * @throws FTDIException
+	 * @see Device#open()
 	 */
-	public native void open(Device dev) throws FTDIException;
+	native void open(Device dev) throws FTDIException;
 	
 	/**
 	 * Reads data from device up to the size of the buffer. Calls FT_Read. Note that
@@ -104,15 +132,16 @@ public class FTDIInterface {
 	 * @return number of bytes actually read.
 	 * @throws FTDIException
 	 */
-	public native int read(long ftHandle, byte[] buffer, int bufferLength) throws FTDIException;
+	native int read(long ftHandle, byte[] buffer, int bufferLength) throws FTDIException;
 	
 	/**
 	 * Send a reset command to the device. Calls FT_ResetDevice.
 	 * 
 	 * @param ftHandle
 	 * @throws FTDIException
+	 * @see Device#reset()
 	 */
-	public native void reset(long ftHandle) throws FTDIException;
+	native void reset(long ftHandle) throws FTDIException;
 	
 	/**
 	 * Enables different chips modes. Calls FT_SetBitMode.
@@ -122,7 +151,7 @@ public class FTDIInterface {
 	 * @param mode
 	 * @throws FTDIException
 	 */
-	public native void setBitMode(long ftHandle, byte pinDirection, byte mode) throws FTDIException;
+	native void setBitMode(long ftHandle, byte pinDirection, byte mode) throws FTDIException;
 	
 	/**
 	 * Set the latency timer value.
@@ -136,7 +165,7 @@ public class FTDIInterface {
 	 * @param ftHandle
 	 * @param timer Required value, in milliseconds, of latency timer. Valid range is 2 - 255.
 	 */
-	public native void setLatencyTimer(long ftHandle, byte timer) throws FTDIException;
+	native void setLatencyTimer(long ftHandle, byte timer) throws FTDIException;
 	
 	/**
 	 * Sets the read and write timeouts for the device.
@@ -146,19 +175,8 @@ public class FTDIInterface {
 	 * @param writeTimeout write timeout in milliseconds.
 	 * @throws FTDIException
 	 */
-	public native void setTimeouts(long ftHandle, int readTimeout, int writeTimeout) throws FTDIException;
+	native void setTimeouts(long ftHandle, int readTimeout, int writeTimeout) throws FTDIException;
 	
-	/**
-	 * A command to include a custom VID and PID combination within the internal device list table.
-	 * This will allow the driver to load for the specified VID and PID combination.
-	 * Note, on Windows this performs a no-op.
-	 * 
-	 * @param vid
-	 * @param pid
-	 * @throws FTDIException
-	 */
-	public native void setVidPid(int vid, int pid) throws FTDIException;
-
 	/**
 	 * Set the USB request transfer size.
 	 * 
@@ -173,7 +191,7 @@ public class FTDIInterface {
 	 * @param inTransferSize Transfer size for USB IN request.
 	 * @param outTransferSize Transfer size for USB OUT request.
 	 */
-	public native void setUSBParameters(long ftHandle, int inTransferSize, int outTransferSize) throws FTDIException;
+	native void setUSBParameters(long ftHandle, int inTransferSize, int outTransferSize) throws FTDIException;
 
 	/**
 	 * Write data to the device. Calls FT_Write.
@@ -183,6 +201,6 @@ public class FTDIInterface {
 	 * @return number of bytes actually written
 	 * @throws FTDIException
 	 */
-	public native int write(long ftHandle, byte[] buffer, int numBytesToWrite) throws FTDIException;
+	native int write(long ftHandle, byte[] buffer, int numBytesToWrite) throws FTDIException;
 
 }
