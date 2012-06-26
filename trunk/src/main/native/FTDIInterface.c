@@ -10,8 +10,11 @@
 
 /*
  * Utility method to make it easier to handle failures.
+ *
+ * Creates an FTDIException, sets the status and function name.
  */
 void ThrowFTDIException(JNIEnv * env, const jint ftStatus, const char * functionName) {
+
 	// Lookup exception class
 	jclass exceptionCls = (*env)->FindClass(env, "net/sf/yad2xx/FTDIException");
 	if (exceptionCls == NULL) {
@@ -43,7 +46,7 @@ void ThrowFTDIException(JNIEnv * env, const jint ftStatus, const char * function
 
 /*
  * Class:     net_sf_yad2xx_FTDIInterface
- * Method:    open
+ * Method:    close
  * Signature: (Lnet/sf/yad2xx/Device;)V
  */
 JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_close
@@ -51,12 +54,13 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_close
 	FT_HANDLE ftHandle;
 	FT_STATUS ftStatus;
 
+	// Get Device.class
 	jclass deviceCls = (*env)->GetObjectClass(env, device);
 	if (deviceCls == NULL) {
 		return; // Exception thrown
 	}
 
-	// get device handle
+	// get device field ftHandle
 	jfieldID handleID = (*env)->GetFieldID(env, deviceCls, "ftHandle", "J");
 	if (handleID == NULL) {
 		return; // Exception thrown
@@ -154,11 +158,13 @@ JNIEXPORT jobjectArray JNICALL Java_net_sf_yad2xx_FTDIInterface_getDevices
 		return NULL;
 	}
 
+	// Lookup Device.class
 	jclass deviceCls = (*env)->FindClass(env, "net/sf/yad2xx/Device");
 	if (deviceCls == NULL) {
 		return NULL;  // Exception thrown
 	}
 
+	// Allocate an array to hold the correct number of attached Devices
 	jobjectArray devices = (*env)->NewObjectArray(env, dwNumDevs, deviceCls, NULL);
 	if (devices == NULL) {
 		return NULL;  // OutOfMemoryError thrown
