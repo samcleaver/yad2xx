@@ -31,23 +31,27 @@ public class FTDIInterface {
 	}
 
 	/**
-	 * Close the opened device.
+	 * Close the opened device. Calls FT_Close. ftHandle and flags will be 
+	 * reset at completion.
 	 *
-	 * @param device
+	 * @param device to close
 	 * @throws FTDIException
 	 */
 	public native void close(Device device) throws FTDIException;
 	
 	/**
-	 * Returns number of attached FTDI devices matching current VID/PID settings.
+	 * This function (FT_CreateDeviceInfoList) builds a device information list
+	 * and returns the number of D2XX devices connected to the system. The list
+	 * contains information about both unopen and open devices.
 	 *
-	 * @return
+	 * @return number of devices connected to the system.
 	 * @throws FTDIException
 	 */
 	public native int getDeviceCount() throws FTDIException;
 
 	/**
-	 * Returns the D2XX library version as M.m.p.
+	 * Returns the D2XX library version as M.m.p. A prettier way of calling
+	 * FT_GetLibraryVersion.
 	 *
 	 * @throws FTDIException 
 	 */
@@ -75,7 +79,7 @@ public class FTDIInterface {
 	public native Device[] getDevices() throws FTDIException;
 	
 	/**
-	 * Returns numbers of bytes in the receive queue.
+	 * Returns numbers of bytes in the receive queue. Calls FT_GetQueueStatus.
 	 * 
 	 * @param ftHandle
 	 * @throws FTDIException
@@ -83,7 +87,7 @@ public class FTDIInterface {
 	public native int getQueueStatus(long ftHandle) throws FTDIException;
 	
 	/**
-	 * Returns numbers of bytes in the receive queue.
+	 * Opens the device. Returned handle is recorded in the device. Calls FT_Open.
 	 * 
 	 * @param dev 
 	 * @throws FTDIException
@@ -91,7 +95,10 @@ public class FTDIInterface {
 	public native void open(Device dev) throws FTDIException;
 	
 	/**
-	 * Reads data from device up to the size of the buffer.
+	 * Reads data from device up to the size of the buffer. Calls FT_Read. Note that
+	 * this call will block if the requested number of bytes is not immediately 
+	 * available. Call getQueueStatus to get the number of bytes actually available
+	 * to avoid blocking. 
 	 * 
 	 * @param ftHandle
 	 * @return number of bytes actually read.
@@ -100,7 +107,7 @@ public class FTDIInterface {
 	public native int read(long ftHandle, byte[] buffer, int bufferLength) throws FTDIException;
 	
 	/**
-	 * Send a reset command to the device.
+	 * Send a reset command to the device. Calls FT_ResetDevice.
 	 * 
 	 * @param ftHandle
 	 * @throws FTDIException
@@ -108,7 +115,8 @@ public class FTDIInterface {
 	public native void reset(long ftHandle) throws FTDIException;
 	
 	/**
-	 * 
+	 * Enables different chips modes. Calls FT_SetBitMode.
+	 *
 	 * @param ftHandle
 	 * @param pinDirection
 	 * @param mode
@@ -126,7 +134,7 @@ public class FTDIInterface {
 	 * requiring faster response times from short data packets.
 	 * 
 	 * @param ftHandle
-	 * @param timer Required value, in milliseconds, of latency timer. Valid range is 2 – 255.
+	 * @param timer Required value, in milliseconds, of latency timer. Valid range is 2 - 255.
 	 */
 	public native void setLatencyTimer(long ftHandle, byte timer) throws FTDIException;
 	
@@ -168,7 +176,7 @@ public class FTDIInterface {
 	public native void setUSBParameters(long ftHandle, int inTransferSize, int outTransferSize) throws FTDIException;
 
 	/**
-	 * Write data to the device.
+	 * Write data to the device. Calls FT_Write.
 	 *
 	 * @param ftHandle
 	 * @param buffer bytes to write to device.
