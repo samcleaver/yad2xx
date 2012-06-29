@@ -61,8 +61,38 @@ public class Device {
 		iFace.close(this);
 	}
 
+	/**
+	 * Gets the instantaneous value of the databus.
+	 *
+	 * @return
+	 * @throws FTDIException
+	 */
+	public FTDIBitMode getBitMode() throws FTDIException {
+		return FTDIBitMode.lookup(iFace.getBitMode(ftHandle));
+	}
+
+	/**
+	 * Device description from FT_DEVICE_LIST_INFO_NODE.
+	 */
 	public String getDescription() {
 		return description;
+	}
+	
+	/**
+	 * Get the current value of the latency timer.
+	 * 
+	 * In the FT8U232AM and FT8U245AM devices, the receive buffer timeout that is
+	 * used to flush remaining data from the receive buffer was fixed at 16 ms. In
+	 * all other FTDI devices, this timeout is programmable and can be set at 1 ms
+	 * intervals between 2ms and 255 ms. This allows the device to be better
+	 * optimized for protocols requiring faster response times from short data 
+	 * packets.
+	 * 
+	 * @return timeout value in ms
+	 * @throws FTDIException
+	 */
+	public int getLatencyTimer() throws FTDIException {
+		return (0xff & iFace.getLatencyTimer(ftHandle));
 	}
 	
 	/**
@@ -75,18 +105,30 @@ public class Device {
 		return iFace.getQueueStatus(ftHandle);
 	}
 
+	/**
+	 * Device serial number from FT_DEVICE_LIST_INFO_NODE.
+	 */
 	public String getSerialNumber() {
 		return serialNumber;
 	}
-	
+
+	/**
+	 * Device type from FT_DEVICE_LIST_INFO_NODE. Mapped to an Enum.
+	 */
 	public FTDIDeviceType getType() {
 		return FTDIDeviceType.values()[type];
 	}
-	
+
+	/**
+	 * Convenient way to test for USB HiSpeed capability.
+	 */
 	public boolean isHighSpeed() {
 		return (flags & FT_FLAGS_HISPEED) != 0;
 	}
-	
+
+	/**
+	 * Test if device is open.
+	 */
 	public boolean isOpen() {
 		return (flags & FT_FLAGS_OPENED) != 0;
 	}

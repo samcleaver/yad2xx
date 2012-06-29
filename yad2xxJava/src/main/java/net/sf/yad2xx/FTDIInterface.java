@@ -105,6 +105,29 @@ public class FTDIInterface {
 	native void close(Device device) throws FTDIException;
 
 	/**
+	 * Gets the instantaneous value of the data bus.
+	 * 
+	 * @param ftHandle
+	 * @return current bit mode
+	 * @throws FTDIException
+	 */
+	native byte getBitMode(long ftHandle) throws FTDIException;
+	
+	/**
+	 * Get the current value of the latency timer. In the FT8U232AM and FT8U245AM
+	 * devices, the receive buffer timeout that is used to flush remaining data
+	 * from the receive buffer was fixed at 16 ms. In all other FTDI devices, this
+	 * timeout is programmable and can be set at 1 ms intervals between 2ms and 
+	 * 255 ms. This allows the device to be better optimized for protocols requiring
+	 * faster response times from short data packets.
+	 * 
+	 * @param ftHandle
+	 * @return timeout value in ms
+	 * @throws FTDIException
+	 */
+	native byte getLatencyTimer(long ftHandle) throws FTDIException;
+	
+	/**
 	 * Returns numbers of bytes in the receive queue. Calls FT_GetQueueStatus.
 	 * 
 	 * @param ftHandle
