@@ -223,6 +223,54 @@ JNIEXPORT jobjectArray JNICALL Java_net_sf_yad2xx_FTDIInterface_getDevices
 
 /*
  * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    getBitMode
+ * Signature: (J)B
+ */
+JNIEXPORT jbyte JNICALL Java_net_sf_yad2xx_FTDIInterface_getBitMode
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+	UCHAR BitMode;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_GetBitMode(ftHandle, &BitMode);
+
+	if (ftStatus == FT_OK) {
+		return (jbyte)BitMode;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_GetBitMode");
+		return 0;
+	}
+}
+
+
+/*
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    getLatencyTimer
+ * Signature: (J)B
+ */
+JNIEXPORT jbyte JNICALL Java_net_sf_yad2xx_FTDIInterface_getLatencyTimer
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+	UCHAR LatencyTimer;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_GetLatencyTimer(ftHandle, &LatencyTimer);
+
+	if (ftStatus == FT_OK) {
+		return (jbyte)LatencyTimer;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_GetLatencyTimer");
+		return 0;
+	}
+}
+
+
+/*
+ * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    getQueueStatus
  * Signature: (J)I
  */

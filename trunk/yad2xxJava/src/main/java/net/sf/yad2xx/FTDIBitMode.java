@@ -44,4 +44,39 @@ public enum FTDIBitMode {
 	public byte getMode() {
 		return mode;
 	}
+	
+	/**
+	 * Locate an FTDIBitMode given its id. Returns null if not found.
+	 */
+	public static FTDIBitMode lookup(byte id) {
+		FTDIBitMode result = null;
+		
+		switch (id) {
+		case 0x00:
+			result = FT_BITMODE_RESET;
+			break;
+		case 0x01:
+			result = FT_BITMODE_ASYNC_BITBANG;
+			break;
+		case 0x02:
+			result = FT_BITMODE_MPSSE;
+			break;
+		case 0x04:
+			result = FT_BITMODE_SYNC_BITBANG;
+			break;
+		case 0x08:
+			result = FT_BITMODE_MCU_HOST;
+			break;
+		case 0x10:
+			result = FT_BITMODE_FAST_SERIAL;
+			break;
+		case 0x20:
+			result = FT_BITMODE_CBUS_BITBANG;
+			break;
+		case 0x40:
+			result = FT_BITMODE_SYNC_FIFO;
+			break;
+		}
+		return result;
+	}
 }
