@@ -150,17 +150,48 @@ public class Device {
 		return iFace.read(ftHandle, buffer, buffer.length);
 	}
 	
+	/**
+	 * This function sets the baud rate for the device.
+	 * 
+	 * @param baudRate
+	 * @throws FTDIException
+	 */
+	public void setBaudRate(int baudRate) throws FTDIException {
+		iFace.setBaudRate(ftHandle, baudRate);
+	}
+	
+	/**
+	 * Enables different chip modes.
+	 *
+	 * @param pinDirection sets up which bits are inputs and outputs. 0 = input, 1 = output.
+	 * @param bitMode
+	 * @throws FTDIException
+	 */
 	public void setBitMode(byte pinDirection, FTDIBitMode bitMode) throws FTDIException {
 		iFace.setBitMode(ftHandle, pinDirection, (byte)bitMode.getMode());
 	}
 	
 	/**
 	 * This function sets the special characters for the device.
-	 * 
-	 * @param 
+	 *
+	 * @throws FTDIException
 	 */
 	public void setChars() throws FTDIException {
 		throw new RuntimeException("Not implemented yet");
+	}
+	
+	/**
+	 * Sets or clears the Data Terminal Ready (DTR) control signal.
+	 * 
+	 * @param dtr
+	 * @throws FTDIException
+	 */
+	public void setDtr(boolean dtr) throws FTDIException {
+		if (dtr) {
+			iFace.setDtr(ftHandle);
+		} else {
+			iFace.clrDtr(ftHandle);
+		}
 	}
 	
 	/**
@@ -176,6 +207,20 @@ public class Device {
 	 */
 	public void setLatencyTimer(byte timer) throws FTDIException {
 		iFace.setLatencyTimer(ftHandle, timer);
+	}
+	
+	/**
+	 * Sets or clears the Request To Send (RTS) control signal.
+	 * 
+	 * @param rts
+	 * @throws FTDIException
+	 */
+	public void setRts(boolean rts) throws FTDIException {
+		if (rts) {
+			iFace.setRts(ftHandle);
+		} else {
+			iFace.clrRts(ftHandle);
+		}
 	}
 	
 	/**
@@ -253,6 +298,5 @@ public class Device {
 	public int write(byte[] buffer, int numBytesToWrite) throws FTDIException {
 		return iFace.write(ftHandle, buffer, numBytesToWrite);
 	}
-	
 
 }

@@ -105,6 +105,22 @@ public class FTDIInterface {
 	native void close(Device device) throws FTDIException;
 
 	/**
+	 * This function clears the Data Terminal Ready (DTR) control signal.
+	 * 
+	 * @param ftHandle
+	 * @throws FTDIException
+	 */
+	native void clrDtr(long ftHandle) throws FTDIException;
+	
+	/**
+	 * This function clears the Request To Send (RTS) control signal.
+	 * 
+	 * @param ftHandle
+	 * @throws FTDIException
+	 */
+	native void clrRts(long ftHandle) throws FTDIException;
+	
+	/**
 	 * Gets the instantaneous value of the data bus.
 	 * 
 	 * @param ftHandle
@@ -167,6 +183,16 @@ public class FTDIInterface {
 	native void reset(long ftHandle) throws FTDIException;
 	
 	/**
+	 * This function sets the baud rate for the device. Calls FT_SetBaudRate.
+	 * 
+	 * @param ftHandle
+	 * @param baudRate
+	 * @throws FTDIException
+	 * @see Device#setBaudRate()
+	 */
+	native void setBaudRate(long ftHandle, int baudRate) throws FTDIException;
+	
+	/**
 	 * Enables different chips modes. Calls FT_SetBitMode.
 	 *
 	 * @param ftHandle
@@ -175,6 +201,22 @@ public class FTDIInterface {
 	 * @throws FTDIException
 	 */
 	native void setBitMode(long ftHandle, byte pinDirection, byte mode) throws FTDIException;
+	
+	/**
+	 * This function sets the Data Terminal Ready (DTR) control signal.
+	 * 
+	 * @param ftHandle
+	 * @throws FTDIException
+	 */
+	native void setDtr(long ftHandle) throws FTDIException;
+	
+	/**
+	 * This function sets the Request To Send (RTS) control signal.
+	 * 
+	 * @param ftHandle
+	 * @throws FTDIException
+	 */
+	native void setRts(long ftHandle) throws FTDIException;
 	
 	/**
 	 * Set the latency timer value.

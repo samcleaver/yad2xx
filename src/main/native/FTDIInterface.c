@@ -45,6 +45,8 @@ void ThrowFTDIException(JNIEnv * env, const jint ftStatus, const char * function
 
 
 /*
+ * Close an open device.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    close
  * Signature: (Lnet/sf/yad2xx/Device;)V
@@ -86,6 +88,56 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_close
 
 	} else {
 		ThrowFTDIException(env, ftStatus, "FT_Close");
+	}
+}
+
+
+/*
+ * This function clears the Data Terminal Ready (DTR) control signal.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    clrDtr
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_clrDtr
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_ClrDtr(ftHandle);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_ClrDtr");
+		return;
+	}
+}
+
+
+/*
+ * This function clears the Request To Send (RTS) control signal.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    clrRts
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_clrRts
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_ClrRts(ftHandle);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_ClrRts");
+		return;
 	}
 }
 
@@ -222,6 +274,8 @@ JNIEXPORT jobjectArray JNICALL Java_net_sf_yad2xx_FTDIInterface_getDevices
 
 
 /*
+ * Gets the instantaneous value of the data bus.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    getBitMode
  * Signature: (J)B
@@ -246,6 +300,8 @@ JNIEXPORT jbyte JNICALL Java_net_sf_yad2xx_FTDIInterface_getBitMode
 
 
 /*
+ * Get the current value of the latency timer.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    getLatencyTimer
  * Signature: (J)B
@@ -270,6 +326,8 @@ JNIEXPORT jbyte JNICALL Java_net_sf_yad2xx_FTDIInterface_getLatencyTimer
 
 
 /*
+ * Gets the number of bytes in the receive queue.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    getQueueStatus
  * Signature: (J)I
@@ -294,6 +352,8 @@ JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_getQueueStatus
 
 
 /*
+ * Open the device and return a handle which will be used for subsequent accesses.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    open
  * Signature: (Lnet/sf/yad2xx/Device;)V
@@ -344,6 +404,8 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_open
 
 
 /*
+ * Read data from the device.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    read
  * Signature: (J[BI)I
@@ -374,6 +436,8 @@ JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_read
 
 
 /*
+ * This function sends a reset command to the device.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    reset
  * Signature: (J)V
@@ -397,6 +461,33 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_reset
 
 
 /*
+ * This function sets the baud rate for the device.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    setBaudRate
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setBaudRate
+  (JNIEnv * env, jobject iFace, jlong handle, jint baudRate)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_SetBaudRate(ftHandle, (DWORD) baudRate);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_SetBaudRate");
+		return;
+	}
+}
+
+
+/*
+ * Enables different chip modes.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    setBitMode
  * Signature: (JBB)V
@@ -420,6 +511,33 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setBitMode
 
 
 /*
+ * This function sets the Data Terminal Ready (DTR) control signal.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    setDtr
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setDtr
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_SetDtr(ftHandle);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_SetDtr");
+		return;
+	}
+}
+
+
+/*
+ * Set the latency timer value.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    setLatencyTimer
  * Signature: (JB)V
@@ -443,6 +561,33 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setLatencyTimer
 
 
 /*
+ * This function sets the Request To Send (RTS) control signal.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    setRts
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setRts
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_SetRts(ftHandle);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_SetRts");
+		return;
+	}
+}
+
+
+/*
+ * This function sets the read and write timeouts for the device.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    setTimeouts
  * Signature: (JII)V
@@ -466,6 +611,8 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setTimeouts
 
 
 /*
+ * Set the USB request transfer size.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    setUSBParameters
  * Signature: (JII)V
@@ -489,6 +636,9 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setUSBParameters
 
 
 /*
+ * A command to include a custom VID and PID combination within the internal device list table.
+ * This will allow the driver to load for the specified VID and PID combination.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    setVidPid
  * Signature: (II)V
@@ -520,6 +670,8 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setVidPid
 
 
 /*
+ * Write data to the device.
+ *
  * Class:     net_sf_yad2xx_FTDIInterface
  * Method:    write
  * Signature: (J[BI)I
