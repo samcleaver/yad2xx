@@ -1,5 +1,7 @@
 package net.sf.yad2xx;
 
+import java.io.PrintStream;
+
 /**
  * Exercise the JNI interface.
  * 
@@ -10,32 +12,32 @@ public class FTDIInterfaceTest {
 
 	public static void main(String[] args) {
 		try {
+			PrintStream out = System.out;
 			FTDIInterface ftdi = new FTDIInterface();
 		
-			System.out.println("FTDI Test");
-			System.out.println("---------");
-			System.out.println("Library version: " + ftdi.getLibraryVersion());
-			System.out.println("Device count: " + ftdi.getDeviceCount());
+			out.println("FTDI Test");
+			out.println("---------");
+			out.println("Library version: " + ftdi.getLibraryVersion());
+			out.println();
+			
+			out.println("Standard device count: " + ftdi.getDeviceCount());
+			out.println("Standard FTDI devices:");
+			listDevices(ftdi, out);
 			
 			//
-			// Comment the following 2 lines out when using FTDI components with factory VID/PID settings
+			// Include FTDI devices with non-factory VID/PID settings.
+			// If your FTDI device(s) have been reconfigured to use a custom VID/PID you should add them here.
 			//
-			System.out.println("Setting VID/PID");
+			out.println("Setting custom VID/PID\n");
 			ftdi.setVidPid(0x0403, 0x84e0);
 			
-			System.out.println("Device count: " + ftdi.getDeviceCount());
+			out.println("Total device count: " + ftdi.getDeviceCount());
+			out.println("All FTDI devices:");
+			listDevices(ftdi, out);
 
-			System.out.println("---------");
-			Device[] devices = ftdi.getDevices();
-			System.out.println(devices.length);
-			for (int i = 0; i < devices.length; i++) {
-				Device dev = devices[i];
-				System.out.println(dev);
-			}
-
-			System.out.println("---------");
-			if (devices.length > 0) {
-				Device dev = devices[0];
+			out.println("---------");
+			if (ftdi.getDevices().length > 0) {
+				Device dev = ftdi.getDevices()[0];
 				if (!dev.isOpen()) {
 					dev.open();
 					dev.setBitMode((byte) 0x0B, FTDIBitMode.FT_BITMODE_ASYNC_BITBANG);
@@ -49,4 +51,11 @@ public class FTDIInterfaceTest {
 		}
 	}
 
+	private static void listDevices(FTDIInterface ftdi, PrintStream out) throws FTDIException {
+		Device[] devices = ftdi.getDevices();
+		for (int i = 0; i < devices.length; i++) {
+			Device dev = devices[i];
+			out.println(dev);
+		}
+	}
 }
