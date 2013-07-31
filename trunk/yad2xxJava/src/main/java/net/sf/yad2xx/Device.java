@@ -261,9 +261,15 @@ public class Device {
 		result.append(":\n");
 		result.append("\tFlags=");
 		result.append(Integer.toHexString(flags));
-		result.append("\n\tType=");
+		result.append(" (isOpen: ");
+		result.append(isOpen());
+		result.append(" isHighSpeed: ");
+		result.append(isHighSpeed());
+		result.append(")\n\tType=");
 		result.append(Integer.toHexString(type));
-		result.append("\n\tID=");
+		result.append(" (");
+		result.append(getType());
+		result.append(")\n\tID=");
 		result.append(Integer.toHexString(id));
 		result.append("\n\tlocID=");
 		result.append(Integer.toHexString(locationId));

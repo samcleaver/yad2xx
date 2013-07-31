@@ -16,8 +16,13 @@ public class FTDIInterfaceTest {
 			System.out.println("---------");
 			System.out.println("Library version: " + ftdi.getLibraryVersion());
 			System.out.println("Device count: " + ftdi.getDeviceCount());
+			
+			//
+			// Comment the following 2 lines out when using FTDI components with factory VID/PID settings
+			//
 			System.out.println("Setting VID/PID");
 			ftdi.setVidPid(0x0403, 0x84e0);
+			
 			System.out.println("Device count: " + ftdi.getDeviceCount());
 
 			System.out.println("---------");
@@ -26,16 +31,17 @@ public class FTDIInterfaceTest {
 			for (int i = 0; i < devices.length; i++) {
 				Device dev = devices[i];
 				System.out.println(dev);
-				System.out.println("isOpen: " + dev.isOpen());
-				System.out.println("isHighSpeed: " + dev.isHighSpeed());
-				System.out.println("type: " + dev.getType());
 			}
 
 			System.out.println("---------");
-			Device dev = devices[0];
-			dev.open();
-			dev.setBitMode((byte) 0x0B, FTDIBitMode.FT_BITMODE_ASYNC_BITBANG);
-			dev.close();
+			if (devices.length > 0) {
+				Device dev = devices[0];
+				if (!dev.isOpen()) {
+					dev.open();
+					dev.setBitMode((byte) 0x0B, FTDIBitMode.FT_BITMODE_ASYNC_BITBANG);
+					dev.close();
+				}
+			}
 		} catch (FTDIException e) {
 			e.printStackTrace();
 			System.err.println("Function: " + e.getFunction());
