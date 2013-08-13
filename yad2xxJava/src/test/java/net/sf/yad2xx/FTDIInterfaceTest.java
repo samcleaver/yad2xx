@@ -3,7 +3,7 @@ package net.sf.yad2xx;
 import java.io.PrintStream;
 
 /**
- * Exercise the JNI interface.
+ * Exercise the JNI interface by listing all attached FTDI devices and their properties.
  * 
  * @since Jun 20, 2012
  * @author Stephen Davies
@@ -17,7 +17,7 @@ public class FTDIInterfaceTest {
 		
 			out.println("FTDI Test");
 			out.println("---------");
-			out.println("Library version: " + ftdi.getLibraryVersion());
+			out.println("D2XX Library version: " + ftdi.getLibraryVersion());
 			out.println();
 			
 			out.println("Standard device count: " + ftdi.getDeviceCount());
@@ -39,9 +39,12 @@ public class FTDIInterfaceTest {
 			if (ftdi.getDevices().length > 0) {
 				Device dev = ftdi.getDevices()[0];
 				if (!dev.isOpen()) {
+					out.println("Opening device 0");
 					dev.open();
-					dev.setBitMode((byte) 0x0B, FTDIBitMode.FT_BITMODE_ASYNC_BITBANG);
+					out.println(dev);
+					out.println("Closing device 0");
 					dev.close();
+					out.println(dev);
 				}
 			}
 		} catch (FTDIException e) {
