@@ -52,9 +52,12 @@
 								<fileName>FTDIInterface.c</fileName>
 							</fileNames>
 						</source>
-						<source>
-							<directory>${env.JAVA_HOME}/include</directory>
-						</source>
+                        <source>
+                            <directory>${env.JAVA_HOME}/include</directory>
+                        </source>
+                        <source>
+                            <directory>${env.JAVA_HOME}/include/win32</directory>
+                        </source>
 						<source>
 							<directory>/utils/FTDI_D2XX</directory>
 						</source>
