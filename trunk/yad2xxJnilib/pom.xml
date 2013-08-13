@@ -47,9 +47,12 @@
 								<fileName>FTDIInterface.c</fileName>
 							</fileNames>
 						</source>
-						<source>
-							<directory>${env.JAVA_HOME}/include</directory>
-						</source>
+                        <source>
+                            <directory>${env.JAVA_HOME}/include</directory>
+                        </source>
+                        <source>
+                            <directory>${env.JAVA_HOME}/include/darwin</directory>
+                        </source>
 					</sources>
 
 					<linkerStartOptions>
