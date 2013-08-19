@@ -151,6 +151,15 @@ public class Device {
 	}
 	
 	/**
+	 * Sends a reset command to the device.
+	 * 
+	 * @throws FTDIException
+	 */
+	public void reset() throws FTDIException {
+		iFace.reset(ftHandle);
+	}
+
+	/**
 	 * This function sets the baud rate for the device.
 	 * 
 	 * @param baudRate
@@ -176,8 +185,8 @@ public class Device {
 	 *
 	 * @throws FTDIException
 	 */
-	public void setChars() throws FTDIException {
-		throw new RuntimeException("Not implemented yet");
+	public void setChars(char event, boolean eventEnable, char error, boolean errorEnable) throws FTDIException {
+		iFace.setChars(ftHandle, event, eventEnable, error, errorEnable);
 	}
 	
 	/**
@@ -242,15 +251,6 @@ public class Device {
 	 */
 	public void setUSBParameters(int inTransferSize, int outTransferSize) throws FTDIException {
 		iFace.setUSBParameters(ftHandle, inTransferSize, outTransferSize);
-	}
-	
-	/**
-	 * Sends a reset command to the device.
-	 * 
-	 * @throws FTDIException
-	 */
-	public void reset() throws FTDIException {
-		iFace.reset(ftHandle);
 	}
 	
 	@Override
