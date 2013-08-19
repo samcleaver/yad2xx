@@ -203,6 +203,18 @@ public class FTDIInterface {
 	native void setBitMode(long ftHandle, byte pinDirection, byte mode) throws FTDIException;
 	
 	/**
+	 * This function sets the special characters for the device.
+	 *
+	 * @param ftHandle
+	 * @param event - Event character.
+	 * @param eventEnable - Enable event character.
+	 * @param error - Error character.
+	 * @param errorEnable - Enable error character.
+	 * @throws FTDIException
+	 */
+	native void setChars(long ftHandle, char event, boolean eventEnable, char error, boolean errorEnable) throws FTDIException;
+	
+	/**
 	 * This function sets the Data Terminal Ready (DTR) control signal.
 	 * 
 	 * @param ftHandle
