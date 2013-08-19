@@ -511,6 +511,35 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setBitMode
 
 
 /*
+ * Set special characters for the device.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    setChars
+ * Signature: (JCZCZ)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setChars
+  (JNIEnv * env, jobject iFace, jlong handle, jchar event, jboolean eventEnable, jchar error, jboolean errorEnable)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_SetChars(ftHandle,
+			event,
+			eventEnable ? 1 : 0,
+			error,
+			errorEnable ? 1 : 0);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_SetChars");
+		return;
+	}
+}
+
+
+/*
  * This function sets the Data Terminal Ready (DTR) control signal.
  *
  * Class:     net_sf_yad2xx_FTDIInterface
