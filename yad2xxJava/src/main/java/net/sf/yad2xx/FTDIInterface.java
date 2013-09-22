@@ -49,6 +49,7 @@ public class FTDIInterface {
 	 * 
 	 * @return number of devices connected to the system
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public native int getDeviceCount() throws FTDIException;
 
@@ -57,6 +58,7 @@ public class FTDIInterface {
 	 * calls to FT_CreateDeviceInfoList and FT_GetDeviceInfoList.
 	 *
 	 * Copies values returned from FT_GetDeviceInfoList into individual Device objects.
+	 * @since 0.1
 	 */
 	public native Device[] getDevices() throws FTDIException;
 
@@ -66,6 +68,7 @@ public class FTDIInterface {
 	 *
 	 * @return library version string
 	 * @throws FTDIException 
+	 * @since 0.1
 	 */
 	public String getLibraryVersion() throws FTDIException {
 		int version = getLibraryVersionInt();
@@ -80,6 +83,7 @@ public class FTDIInterface {
 	 * FT_GetLibraryVersion in its raw format.
 	 * 
 	 * @return the D2XX DLL version number.
+	 * @since 0.1
 	 */
 	public native int getLibraryVersionInt() throws FTDIException;
 
@@ -91,6 +95,7 @@ public class FTDIInterface {
 	 * @param vid
 	 * @param pid
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public native void setVidPid(int vid, int pid) throws FTDIException;
 
@@ -101,6 +106,7 @@ public class FTDIInterface {
 	 * @param device to close
 	 * @throws FTDIException
 	 * @see Device#close()
+	 * @since 0.1
 	 */
 	native void close(Device device) throws FTDIException;
 
@@ -109,6 +115,7 @@ public class FTDIInterface {
 	 * 
 	 * @param ftHandle
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	native void clrDtr(long ftHandle) throws FTDIException;
 	
@@ -117,15 +124,26 @@ public class FTDIInterface {
 	 * 
 	 * @param ftHandle
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	native void clrRts(long ftHandle) throws FTDIException;
 	
+	/**
+	 * Erases the device EEPROM.
+	 *
+	 * @param ftHandle
+	 * @throws FTDIException
+	 * @since 0.2
+	 */
+	native void eraseEE(long ftHandle) throws FTDIException;
+
 	/**
 	 * Gets the instantaneous value of the data bus.
 	 * 
 	 * @param ftHandle
 	 * @return current bit mode
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	native byte getBitMode(long ftHandle) throws FTDIException;
 	
@@ -140,6 +158,7 @@ public class FTDIInterface {
 	 * @param ftHandle
 	 * @return timeout value in ms
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	native byte getLatencyTimer(long ftHandle) throws FTDIException;
 	
@@ -149,6 +168,7 @@ public class FTDIInterface {
 	 * @param ftHandle
 	 * @throws FTDIException
 	 * @see Device#getQueueStatus()
+	 * @since 0.1
 	 */
 	native int getQueueStatus(long ftHandle) throws FTDIException;
 	
@@ -158,6 +178,7 @@ public class FTDIInterface {
 	 * @param dev 
 	 * @throws FTDIException
 	 * @see Device#open()
+	 * @since 0.1
 	 */
 	native void open(Device dev) throws FTDIException;
 	
@@ -170,8 +191,20 @@ public class FTDIInterface {
 	 * @param ftHandle
 	 * @return number of bytes actually read.
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	native int read(long ftHandle, byte[] buffer, int bufferLength) throws FTDIException;
+	
+	/**
+	 * Read a 16-bit value from an EEPROM location.
+	 * 
+	 * @param ftHandle
+	 * @param wordOffset EEPROM location to read from
+	 * @return WORD value read from the EEPROM
+	 * @throws FTDIException
+	 * @since 0.2
+	 */
+	native int readEE(long ftHandle, int wordOffset) throws FTDIException;
 	
 	/**
 	 * Send a reset command to the device. Calls FT_ResetDevice.
@@ -179,6 +212,7 @@ public class FTDIInterface {
 	 * @param ftHandle
 	 * @throws FTDIException
 	 * @see Device#reset()
+	 * @since 0.1
 	 */
 	native void reset(long ftHandle) throws FTDIException;
 	
@@ -189,6 +223,7 @@ public class FTDIInterface {
 	 * @param baudRate
 	 * @throws FTDIException
 	 * @see Device#setBaudRate()
+	 * @since 0.1
 	 */
 	native void setBaudRate(long ftHandle, int baudRate) throws FTDIException;
 	
@@ -199,6 +234,7 @@ public class FTDIInterface {
 	 * @param pinDirection
 	 * @param mode
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	native void setBitMode(long ftHandle, byte pinDirection, byte mode) throws FTDIException;
 	
@@ -211,6 +247,7 @@ public class FTDIInterface {
 	 * @param error - Error character.
 	 * @param errorEnable - Enable error character.
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	native void setChars(long ftHandle, char event, boolean eventEnable, char error, boolean errorEnable) throws FTDIException;
 	
@@ -219,6 +256,7 @@ public class FTDIInterface {
 	 * 
 	 * @param ftHandle
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	native void setDtr(long ftHandle) throws FTDIException;
 	
@@ -227,6 +265,7 @@ public class FTDIInterface {
 	 * 
 	 * @param ftHandle
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	native void setRts(long ftHandle) throws FTDIException;
 	
@@ -241,6 +280,7 @@ public class FTDIInterface {
 	 * 
 	 * @param ftHandle
 	 * @param timer Required value, in milliseconds, of latency timer. Valid range is 2 - 255.
+	 * @since 0.2
 	 */
 	native void setLatencyTimer(long ftHandle, byte timer) throws FTDIException;
 	
@@ -251,6 +291,7 @@ public class FTDIInterface {
 	 * @param readTimeout read timeout in milliseconds.
 	 * @param writeTimeout write timeout in milliseconds.
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	native void setTimeouts(long ftHandle, int readTimeout, int writeTimeout) throws FTDIException;
 	
@@ -267,6 +308,7 @@ public class FTDIInterface {
 	 * @param ftHandle
 	 * @param inTransferSize Transfer size for USB IN request.
 	 * @param outTransferSize Transfer size for USB OUT request.
+	 * @since 0.2
 	 */
 	native void setUSBParameters(long ftHandle, int inTransferSize, int outTransferSize) throws FTDIException;
 
@@ -277,7 +319,19 @@ public class FTDIInterface {
 	 * @param buffer bytes to write to device.
 	 * @return number of bytes actually written
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	native int write(long ftHandle, byte[] buffer, int numBytesToWrite) throws FTDIException;
+
+	/**
+	 * Write a 16-bit value to an EEPROM location.
+	 *
+	 * @param ftHandle
+	 * @param wordOffset EEPROM location to write to.
+	 * @param value the WORD value to write to the EEPROM.
+	 * @throws FTDIException
+	 * @since 0.2
+	 */
+	native void writeEE(long ftHandle, int wordOffset, int value) throws FTDIException;
 
 }

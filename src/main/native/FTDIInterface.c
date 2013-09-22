@@ -143,6 +143,31 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_clrRts
 
 
 /*
+ * Erases the device EEPROM.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    eraseEE
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_eraseEE
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_EraseEE(ftHandle);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_EraseEE");
+		return;
+	}
+}
+
+
+/*
  * Returns the number of D2XX devices attached.
  *
  * Class:     net_sf_yad2xx_FTDIInterface
@@ -436,6 +461,35 @@ JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_read
 
 
 /*
+ * Read EEPROM data.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    readEE
+ * Signature: (JI)I
+ */
+JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_readEE
+  (JNIEnv * env, jobject iFace, jlong handle, jint offset)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+	DWORD     dwWordOffset;
+	WORD      wValue;
+
+	ftHandle = (FT_HANDLE) handle;
+	dwWordOffset = offset;
+
+    ftStatus = FT_ReadEE(ftHandle, dwWordOffset, &wValue);
+
+	if (ftStatus == FT_OK) {
+		return wValue;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_ReadEE");
+		return 0;
+	}
+}
+
+
+/*
  * This function sends a reset command to the device.
  *
  * Class:     net_sf_yad2xx_FTDIInterface
@@ -725,6 +779,33 @@ JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_write
 	} else {
 		ThrowFTDIException(env, ftStatus, "FT_Write");
 		return 0;
+	}
+
+}
+
+
+/*
+ * Write a value to an EEPROM location.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    writeEE
+ * Signature: (JII)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_writeEE
+  (JNIEnv * env, jobject iFace, jlong handle, jint offset, jint value)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+
+	ftStatus = FT_WriteEE(ftHandle, offset, value);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_Write");
+		return;
 	}
 
 }

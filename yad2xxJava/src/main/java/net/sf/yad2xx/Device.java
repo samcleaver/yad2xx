@@ -56,16 +56,29 @@ public class Device {
 	 * Close the opened device.
 	 * 
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public void close() throws FTDIException {
 		iFace.close(this);
 	}
 
 	/**
+	 * Erases the device EEPROM.
+	 *
+	 * @throws FTDIException
+	 * @since 0.2
+	 */
+	public void eraseEE() throws FTDIException {
+		iFace.eraseEE(ftHandle);
+		return;
+	}
+	
+	/**
 	 * Gets the instantaneous value of the databus.
 	 *
 	 * @return
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	public FTDIBitMode getBitMode() throws FTDIException {
 		return FTDIBitMode.lookup(iFace.getBitMode(ftHandle));
@@ -73,6 +86,8 @@ public class Device {
 
 	/**
 	 * Device description from FT_DEVICE_LIST_INFO_NODE.
+	 * 
+	 * @since 0.1
 	 */
 	public String getDescription() {
 		return description;
@@ -100,6 +115,7 @@ public class Device {
 	 * 
 	 * @return number of bytes in receive queue.
 	 * @throws FTDIException
+ 	 * @since 0.1
 	 */
 	public int getQueueStatus() throws FTDIException {
 		return iFace.getQueueStatus(ftHandle);
@@ -107,6 +123,8 @@ public class Device {
 
 	/**
 	 * Device serial number from FT_DEVICE_LIST_INFO_NODE.
+	 *
+	 * @since 0.1
 	 */
 	public String getSerialNumber() {
 		return serialNumber;
@@ -114,6 +132,8 @@ public class Device {
 
 	/**
 	 * Device type from FT_DEVICE_LIST_INFO_NODE. Mapped to an Enum.
+	 *
+ 	 * @since 0.1
 	 */
 	public FTDIDeviceType getType() {
 		return FTDIDeviceType.values()[type];
@@ -121,6 +141,8 @@ public class Device {
 
 	/**
 	 * Convenient way to test for USB HiSpeed capability.
+	 *
+	 * @since 0.1
 	 */
 	public boolean isHighSpeed() {
 		return (flags & FT_FLAGS_HISPEED) != 0;
@@ -128,11 +150,19 @@ public class Device {
 
 	/**
 	 * Test if device is open.
+	 *
+	 * @since 0.1
 	 */
 	public boolean isOpen() {
 		return (flags & FT_FLAGS_OPENED) != 0;
 	}
 	
+	/**
+	 * Begin a session.
+	 *  
+	 * @throws FTDIException
+	 * @since 0.1
+	 */
 	public void open() throws FTDIException {
 		if (isOpen())
 			throw new IllegalStateException("Device in use");
@@ -145,15 +175,29 @@ public class Device {
 	 * @param buffer bytes read from device. Buffer length determines maximum number of bytes read.
 	 * @return number of bytes actually read
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public int read(byte[] buffer) throws FTDIException {
 		return iFace.read(ftHandle, buffer, buffer.length);
 	}
 	
 	/**
+	 * Read a 16-bit value from an EEPROM location.
+	 * 
+	 * @param offset EEPROM location to read from
+	 * @return WORD value read from the EEPROM
+	 * @throws FTDIException
+	 * @since 0.2
+	 */
+	public int readEE(int offset) throws FTDIException {
+		return iFace.readEE(ftHandle, offset);
+	};
+	
+	/**
 	 * Sends a reset command to the device.
 	 * 
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public void reset() throws FTDIException {
 		iFace.reset(ftHandle);
@@ -164,6 +208,7 @@ public class Device {
 	 * 
 	 * @param baudRate
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public void setBaudRate(int baudRate) throws FTDIException {
 		iFace.setBaudRate(ftHandle, baudRate);
@@ -175,6 +220,7 @@ public class Device {
 	 * @param pinDirection sets up which bits are inputs and outputs. 0 = input, 1 = output.
 	 * @param bitMode
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	public void setBitMode(byte pinDirection, FTDIBitMode bitMode) throws FTDIException {
 		iFace.setBitMode(ftHandle, pinDirection, (byte)bitMode.getMode());
@@ -184,6 +230,7 @@ public class Device {
 	 * This function sets the special characters for the device.
 	 *
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	public void setChars(char event, boolean eventEnable, char error, boolean errorEnable) throws FTDIException {
 		iFace.setChars(ftHandle, event, eventEnable, error, errorEnable);
@@ -194,6 +241,7 @@ public class Device {
 	 * 
 	 * @param dtr
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	public void setDtr(boolean dtr) throws FTDIException {
 		if (dtr) {
@@ -212,7 +260,8 @@ public class Device {
 	 * 2ms and 255 ms. This allows the device to be better optimized for protocols 
 	 * requiring faster response times from short data packets.
 	 * 
-	 * @param timer Required value, in milliseconds, of latency timer. Valid range is 2 – 255.
+	 * @param timer Required value, in milliseconds, of latency timer. Valid range is 2 - 255.
+	 * @since 0.2
 	 */
 	public void setLatencyTimer(byte timer) throws FTDIException {
 		iFace.setLatencyTimer(ftHandle, timer);
@@ -223,6 +272,7 @@ public class Device {
 	 * 
 	 * @param rts
 	 * @throws FTDIException
+	 * @since 0.2
 	 */
 	public void setRts(boolean rts) throws FTDIException {
 		if (rts) {
@@ -238,6 +288,7 @@ public class Device {
 	 * @param readTimeout read timeout in milliseconds.
 	 * @param writeTimeout write timeout in milliseconds.
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public void setTimeouts(int readTimeout, int writeTimeout) throws FTDIException {
 		iFace.setTimeouts(ftHandle, readTimeout, writeTimeout);
@@ -248,11 +299,17 @@ public class Device {
 	 * 
 	 * @param inTransferSize Transfer size for USB IN request.
 	 * @param outTransferSize Transfer size for USB OUT request.
+	 * @since 0.2
 	 */
 	public void setUSBParameters(int inTransferSize, int outTransferSize) throws FTDIException {
 		iFace.setUSBParameters(ftHandle, inTransferSize, outTransferSize);
 	}
 	
+	/**
+	 * Verbose debugging.
+	 * 
+	 * @since 0.1
+	 */
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -289,6 +346,7 @@ public class Device {
 	 * @param buffer bytes to write to device.
 	 * @return number of bytes actually written
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public int write(byte[] buffer) throws FTDIException {
 		return write(buffer, buffer.length);
@@ -300,9 +358,24 @@ public class Device {
 	 * @param buffer bytes to write to device.
 	 * @return number of bytes actually written
 	 * @throws FTDIException
+	 * @since 0.1
 	 */
 	public int write(byte[] buffer, int numBytesToWrite) throws FTDIException {
 		return iFace.write(ftHandle, buffer, numBytesToWrite);
 	}
+
+	/**
+	 * Write a 16-bit value to an EEPROM location.
+	 *
+	 * @param offset EEPROM location to write to.
+	 * @param value the WORD value to write to the EEPROM.
+	 * @throws FTDIException
+	 * @since 0.2
+	 */
+	public void writeEE(int offset, int value) throws FTDIException {
+		iFace.writeEE(ftHandle, offset, value);
+		return;
+	}
+
 
 }
