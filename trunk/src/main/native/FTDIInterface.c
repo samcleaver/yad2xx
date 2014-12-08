@@ -442,12 +442,12 @@ JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_read
 	FT_STATUS ftStatus;
 	DWORD     dwNumBytesToRead;
 	DWORD     dwNumBytesRead;
-    jbyte     inBuff[buffLength];
+	jbyte     inBuff[buffLength];
 
 	ftHandle = (FT_HANDLE) handle;
 	dwNumBytesToRead = buffLength;
 
-    ftStatus = FT_Read(ftHandle, &inBuff, dwNumBytesToRead, &dwNumBytesRead);
+	ftStatus = FT_Read(ftHandle, inBuff, dwNumBytesToRead, &dwNumBytesRead);
 
 	if (ftStatus == FT_OK) {
 		(*env)->SetByteArrayRegion(env, buffer, 0, (jsize) dwNumBytesRead, inBuff);
