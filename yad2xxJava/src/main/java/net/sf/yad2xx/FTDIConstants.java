@@ -27,4 +27,25 @@ package net.sf.yad2xx;
 public interface FTDIConstants {
 	int FT_FLAGS_OPENED = 1;
 	int FT_FLAGS_HISPEED = 2;
+
+	//
+	// Word Lengths
+	//
+	byte FT_BITS_8 = 8;
+	byte FT_BITS_7 = 7;
+
+	//
+	// Stop Bits
+	//
+	byte FT_STOP_BITS_1 = 0;
+	byte FT_STOP_BITS_2 = 2;
+
+	//
+	// Parity
+	//
+	byte FT_PARITY_NONE = 0;
+	byte FT_PARITY_ODD = 1;
+	byte FT_PARITY_EVEN = 2;
+	byte FT_PARITY_MARK = 3;
+	byte FT_PARITY_SPACE = 4;
 }
