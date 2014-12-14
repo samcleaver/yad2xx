@@ -591,6 +591,56 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setBitMode
 
 
 /*
+ * This function resets the BREAK condition of the device.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    setBreakOff
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setBreakOff
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_SetBreakOff(ftHandle);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_SetBreakOff");
+		return;
+	}
+}
+
+
+/*
+ * This function sets the BREAK condition of the device.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    setBreakOn
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setBreakOn
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_SetBreakOn(ftHandle);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_SetBreakOn");
+		return;
+	}
+}
+
+
+/*
  * Set special characters for the device.
  *
  * Class:     net_sf_yad2xx_FTDIInterface

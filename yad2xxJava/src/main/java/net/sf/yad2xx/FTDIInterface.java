@@ -254,6 +254,24 @@ public class FTDIInterface {
 	native void setBitMode(long ftHandle, byte pinDirection, byte mode) throws FTDIException;
 	
 	/**
+	 * Resets the BREAK condition for the device.
+	 * 
+	 * @param ftHandle
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	native void setBreakOff(long ftHandle) throws FTDIException;
+	
+	/**
+	 * Sets the BREAK condition for the device.
+	 * 
+	 * @param ftHandle
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	native void setBreakOn(long ftHandle) throws FTDIException;
+	
+	/**
 	 * This function sets the special characters for the device.
 	 *
 	 * @param ftHandle

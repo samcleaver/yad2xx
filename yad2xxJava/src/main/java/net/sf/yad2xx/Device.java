@@ -239,6 +239,21 @@ public class Device {
 	}
 	
 	/**
+	 * Sets or resets the device break condition. (Combines SetBreakOn and SetBreakOff).
+	 *
+	 * @param breakCondition true for on, false for off
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	public void setBreak(boolean breakCondition) throws FTDIException {
+		if (breakCondition) {
+			iFace.setBreakOn(ftHandle);
+		} else {
+			iFace.setBreakOff(ftHandle);
+		}
+	}
+	
+	/**
 	 * This function sets the special characters for the device.
 	 *
 	 * @throws FTDIException
