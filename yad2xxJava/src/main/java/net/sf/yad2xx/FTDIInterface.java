@@ -267,6 +267,18 @@ public class FTDIInterface {
 	native void setChars(long ftHandle, char event, boolean eventEnable, char error, boolean errorEnable) throws FTDIException;
 	
 	/**
+	 * This function sets the data characteristics for the device.
+	 *
+	 * @param ftHandle
+	 * @param wordLength - Number of bits per word - must be FT_BITS_8 or FT_BITS_7
+	 * @param stopBits - Number of stop bits - must be FT_STOP_BITS_1 or FT_STOP_BITS_2
+	 * @param parity - Parity - must be FT_PARITY_NONE, FT_PARITY_ODD, FT_PARITY_EVEN, FT_PARITY_MARK or FT_PARITY SPACE
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	native void setDataCharacteristics(long ftHandle, byte wordLength, byte stopBits, byte parity) throws FTDIException;
+
+	/**
 	 * This function sets the Data Terminal Ready (DTR) control signal.
 	 * 
 	 * @param ftHandle
