@@ -723,6 +723,34 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setDtr
 
 
 /*
+ * Sets flow control for the device.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    setFlowControl
+ * Signature: (JSCC)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setFlowControl
+  (JNIEnv * env, jobject iFace, jlong handle, jshort flowControl, jchar xOn, jchar xOff)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_SetFlowControl(ftHandle,
+			(USHORT) flowControl,
+			(UCHAR) xOn,
+			(UCHAR) xOff);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_SetFlowControl");
+		return;
+	}
+}
+
+
+/*
  * Set the latency timer value.
  *
  * Class:     net_sf_yad2xx_FTDIInterface
