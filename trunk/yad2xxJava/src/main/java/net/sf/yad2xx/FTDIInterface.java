@@ -103,6 +103,15 @@ public class FTDIInterface {
 	public native int getLibraryVersionInt() throws FTDIException;
 
 	/**
+	 * Gets the modem status and line status from the device.
+	 * 
+	 * @param ftHandle
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	native int getModemStatus(long ftHandle) throws FTDIException;
+
+	/**
 	 * A command to include a custom VID and PID combination within the internal device list table.
 	 * This will allow the driver to load for the specified VID and PID combination.
 	 * Note, on Windows this performs a no-op.

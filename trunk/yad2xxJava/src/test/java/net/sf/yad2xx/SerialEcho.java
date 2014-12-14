@@ -33,6 +33,7 @@ public class SerialEcho {
 					dev.setDataCharacteristics(FT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE);
 					out.println("Setting flow control");
 					dev.setFlowControl(FT_FLOW_NONE, (char) 0, (char) 0);
+					out.println(dev.getModemStatus());
 					out.println("Sending data");
 					byte[] data = { (byte)0x61, (byte)0x62 };
 					for (int i = 0; i < 100; i++) {
