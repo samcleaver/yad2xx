@@ -306,6 +306,18 @@ public class FTDIInterface {
 	native void setDtr(long ftHandle) throws FTDIException;
 	
 	/**
+	 * Sets the flow control for the device.
+	 * 
+	 * @param ftHandle
+	 * @param flowControl Must be one of FT_FLOW_NONE, FT_FLOW_RTS_CTS, FT_FLOW_DTR_DSR or FT_FLOW_XON_XOFF
+	 * @param xOn Character used to signal Xon. Only used if flow control is FT_FLOW_XON_XOFF
+	 * @param xOff Character used to signal Xoff. Only used if flow control is FT_FLOW_XON_XOFF
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	native void setFlowControl(long ftHandle, short flowControl, char xOn, char xOff) throws FTDIException;
+	
+	/**
 	 * This function sets the Request To Send (RTS) control signal.
 	 * 
 	 * @param ftHandle

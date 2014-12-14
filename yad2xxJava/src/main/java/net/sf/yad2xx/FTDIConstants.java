@@ -25,8 +25,28 @@ package net.sf.yad2xx;
  * @author Stephen Davies
  */
 public interface FTDIConstants {
+	
 	int FT_FLAGS_OPENED = 1;
 	int FT_FLAGS_HISPEED = 2;
+
+	//
+	// Baud Rates
+	//
+
+	int FT_BAUD_300 = 300;
+	int FT_BAUD_600 = 600;
+	int FT_BAUD_1200 = 1200;
+	int FT_BAUD_2400 = 2400;
+	int FT_BAUD_4800 = 4800;
+	int FT_BAUD_9600 = 9600;
+	int FT_BAUD_14400 = 14400;
+	int FT_BAUD_19200 = 19200;
+	int FT_BAUD_38400 = 38400;
+	int FT_BAUD_57600 = 57600;
+	int FT_BAUD_115200 = 115200;
+	int FT_BAUD_230400 = 230400;
+	int FT_BAUD_460800 = 460800;
+	int FT_BAUD_921600 = 921600;
 
 	//
 	// Word Lengths
@@ -48,4 +68,14 @@ public interface FTDIConstants {
 	byte FT_PARITY_EVEN = 2;
 	byte FT_PARITY_MARK = 3;
 	byte FT_PARITY_SPACE = 4;
+	
+	//
+	// Flow Control
+	//
+
+	short FT_FLOW_NONE = 0x0000;
+	short FT_FLOW_RTS_CTS = 0x0100;
+	short FT_FLOW_DTR_DSR = 0x0200;
+	short FT_FLOW_XON_XOFF = 0x0400;
+
 }

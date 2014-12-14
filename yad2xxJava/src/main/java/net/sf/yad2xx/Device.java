@@ -292,6 +292,19 @@ public class Device {
 	}
 	
 	/**
+	 * Sets the flow control for the device.
+	 * 
+	 * @param flowControl Must be one of FT_FLOW_NONE, FT_FLOW_RTS_CTS, FT_FLOW_DTR_DSR or FT_FLOW_XON_XOFF
+	 * @param xOn Character used to signal Xon. Only used if flow control is FT_FLOW_XON_XOFF
+	 * @param xOff Character used to signal Xoff. Only used if flow control is FT_FLOW_XON_XOFF
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	public void setFlowControl(short flowControl, char xOn, char xOff) throws FTDIException {
+		iFace.setFlowControl(ftHandle, flowControl, xOn, xOff);
+	}
+	
+	/**
 	 * Set the latency timer value.
 	 * 
 	 * In the FT8U232AM and FT8U245AM devices, the receive buffer timeout that is used 
