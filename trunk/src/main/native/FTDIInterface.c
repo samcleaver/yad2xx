@@ -191,6 +191,32 @@ JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_getDeviceCount
 
 
 /*
+ * Returns the D2XX driver version number.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    getDriverVersionRaw
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_getDriverVersionRaw
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+	DWORD dwVersion;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_GetDriverVersion(ftHandle, &dwVersion);
+
+	if (ftStatus == FT_OK) {
+		return dwVersion;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_GetDriverxVersion");
+		return 0;
+	}
+}
+
+
+/*
  * Returns the D2XX DLL version number.
  *
  * Class:     net_sf_yad2xx_FTDIInterface

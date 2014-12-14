@@ -32,11 +32,22 @@ package net.sf.yad2xx;
 public class FTDIInterface {
 
 	/**
-	 * Loads the native library on first class usage.. The location of the
+	 * Loads the native library on first class usage. The location of the
 	 * library is JVM/platform dependent.
 	 */
 	static {
 		System.loadLibrary("FTDIInterface");
+	}
+
+	/**
+	 * Common formatting for driver and DLL version strings.
+	 */
+	static String formatVersion(int version) throws FTDIException {
+		int major = (version & 0xff0000) >> 16;
+		int minor = (version & 0xff00) >> 8;
+		int patch = (version & 0xff);
+		
+		return "" + major + "." + minor + "." + patch;
 	}
 
 	/**
@@ -63,6 +74,15 @@ public class FTDIInterface {
 	public native Device[] getDevices() throws FTDIException;
 
 	/**
+	 * FT_GetDriverVersion in its raw format.
+	 *
+	 * @param ftHandle
+	 * @return the D2XX driver version number
+	 * @since 0.3
+	 */
+	native int getDriverVersionRaw(long ftHandle) throws FTDIException;
+
+	/**
 	 * Returns the D2XX library version as M.m.p. A prettier way of calling
 	 * FT_GetLibraryVersion.
 	 *
@@ -71,12 +91,7 @@ public class FTDIInterface {
 	 * @since 0.1
 	 */
 	public String getLibraryVersion() throws FTDIException {
-		int version = getLibraryVersionInt();
-		int major = (version & 0xff0000) >> 16;
-		int minor = (version & 0xff00) >> 8;
-		int patch = (version &0xff);
-		
-		return "" + major + "." + minor + "." + patch;
+		return formatVersion(getLibraryVersionInt());
 	}
 
 	/**

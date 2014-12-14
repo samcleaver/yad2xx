@@ -94,6 +94,18 @@ public class Device {
 	}
 	
 	/**
+	 * Returns the D2XX driver version as Major.minor.build. NB. Device has to be opened
+	 * before calling this function.
+	 *
+	 * @return driver version string
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	public String getDriverVersion() throws FTDIException {
+		return FTDIInterface.formatVersion(iFace.getDriverVersionRaw(ftHandle));
+	}
+
+	/**
 	 * Get the current value of the latency timer.
 	 * 
 	 * In the FT8U232AM and FT8U245AM devices, the receive buffer timeout that is
