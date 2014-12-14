@@ -6,7 +6,7 @@
 
 	<groupId>net.sf.yad2xx</groupId>
 	<artifactId>yad2xx</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.3-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 

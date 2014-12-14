@@ -620,6 +620,34 @@ JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setChars
 
 
 /*
+ * Set data characteristics for the device.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    setDataCharacteristics
+ * Signature: (JBBB)V
+ */
+JNIEXPORT void JNICALL Java_net_sf_yad2xx_FTDIInterface_setDataCharacteristics
+  (JNIEnv * env, jobject iFace, jlong handle, jbyte wordLength, jbyte stopBits, jbyte parity)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_SetDataCharacteristics(ftHandle,
+			(UCHAR) wordLength,
+			(UCHAR) stopBits,
+			(UCHAR) parity);
+
+	if (ftStatus == FT_OK) {
+		return;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_SetDataCharacteristics");
+		return;
+	}
+}
+
+
+/*
  * This function sets the Data Terminal Ready (DTR) control signal.
  *
  * Class:     net_sf_yad2xx_FTDIInterface
