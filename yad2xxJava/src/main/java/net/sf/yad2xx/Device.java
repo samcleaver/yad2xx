@@ -123,6 +123,16 @@ public class Device {
 	}
 	
 	/**
+	 * Gets the modem status and line status from the device.
+	 * 
+	 * @throws FTDIException
+	 * @since 0.3
+	 */
+	public ModemStatus getModemStatus() throws FTDIException {
+		return new ModemStatus(iFace.getModemStatus(ftHandle));
+	}
+
+	/**
 	 * Returns number of bytes in receive queue.
 	 * 
 	 * @return number of bytes in receive queue.

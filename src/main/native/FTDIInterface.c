@@ -377,6 +377,32 @@ JNIEXPORT jbyte JNICALL Java_net_sf_yad2xx_FTDIInterface_getLatencyTimer
 
 
 /*
+ * Gets the modem status and the line status from the device.
+ *
+ * Class:     net_sf_yad2xx_FTDIInterface
+ * Method:    getModemStatus
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_net_sf_yad2xx_FTDIInterface_getModemStatus
+  (JNIEnv * env, jobject iFace, jlong handle)
+{
+	FT_HANDLE ftHandle;
+	FT_STATUS ftStatus;
+	DWORD     dwModemStatus;
+
+	ftHandle = (FT_HANDLE) handle;
+	ftStatus = FT_GetModemStatus(ftHandle, &dwModemStatus);
+
+	if (ftStatus == FT_OK) {
+		return dwModemStatus;
+	} else {
+		ThrowFTDIException(env, ftStatus, "FT_GetModemStatus");
+		return 0;
+	}
+}
+
+
+/*
  * Gets the number of bytes in the receive queue.
  *
  * Class:     net_sf_yad2xx_FTDIInterface
